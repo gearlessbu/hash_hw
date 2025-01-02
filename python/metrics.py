@@ -15,6 +15,7 @@ def compute_map(queries, ground_truth, hash_model):
     """
     num_queries = queries.shape[0]
     k = ground_truth.shape[1]
+    # k = 1000
     ap_list = []
 
     for i, query in enumerate(queries):
