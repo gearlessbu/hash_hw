@@ -1,3 +1,7 @@
 datasets/**
-python/__pycache__
 mat
+build
+tmp
+
+python/__pycache__
+.vscode
