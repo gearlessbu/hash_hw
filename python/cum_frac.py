@@ -1,8 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-UnivMultShift_mean_probing_cnts = np.loadtxt("../tmp/UnivMultShift_mean_probing_cnts.txt")
-SimpleTabulation_mean_probing_cnts = np.loadtxt("../tmp/SimpleTabulation_mean_probing_cnts.txt")
+UnivMultShift_mean_probing_cnts = np.loadtxt("./tmp/UnivMultShift_mean_probing_cnts.txt")
+SimpleTabulation_mean_probing_cnts = np.loadtxt("./tmp/SimpleTabulation_mean_probing_cnts.txt")
 
 sorted_UnivMultShift = np.sort(UnivMultShift_mean_probing_cnts)
 sorted_SimpleTabulation = np.sort(SimpleTabulation_mean_probing_cnts)
@@ -23,5 +23,5 @@ plt.xlabel("average probes per insert/delete")
 plt.ylabel("cumulative fraction")
 plt.title("Keys from hyper cube")
 plt.legend()
-plt.savefig("../tmp/hypercube_cumfrac.png", dpi=300, bbox_inches="tight")
+plt.savefig("./tmp/hypercube_cumfrac.png", dpi=300, bbox_inches="tight")
 # plt.show()
