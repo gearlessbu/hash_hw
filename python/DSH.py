@@ -30,13 +30,13 @@ def k_means_quantization_new(xs:np.ndarray, L, alpha, p=5):
     cluster_sizes = np.array([np.sum(labels == i) for i in range(k)])
     print(np.sum(cluster_sizes))
     return kmeans.cluster_centers_, labels, cluster_sizes
-    data = scipy.io.loadmat('../mat/centers.mat')
-    labels = scipy.io.loadmat('../mat/labels.mat')
-    cluster_centers = data['U']
-    labels = labels['dump']
-    cluster_sizes = np.array([np.sum(labels == i) for i in range(1, 97)])
-    print(cluster_centers.shape, np.sum(cluster_sizes), labels.shape)
-    return cluster_centers, None, cluster_sizes
+    # data = scipy.io.loadmat('../mat/centers.mat')
+    # labels = scipy.io.loadmat('../mat/labels.mat')
+    # cluster_centers = data['U']
+    # labels = labels['dump']
+    # cluster_sizes = np.array([np.sum(labels == i) for i in range(1, 97)])
+    # print(cluster_centers.shape, np.sum(cluster_sizes), labels.shape)
+    # return cluster_centers, None, cluster_sizes
 
 def r_nearest_neighbors_matrix(points:np.ndarray, r):
     """

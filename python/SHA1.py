@@ -67,8 +67,3 @@ class SHA1:
 if __name__ == "__main__":
     sha = SHA1()
     print(sha.digest("abcdef"))
-    # print("嗨客网(www.haicoder.net)")
-    # # 使用 bytes 函数，将字符串转成 bytes 序列
-    # cname = '嗨客网(www.haicoder.net)'
-    # bcname = bytes(cname, encoding='utf-8')
-    # print('bcname:', bcname, 'Type:', type(bcname))

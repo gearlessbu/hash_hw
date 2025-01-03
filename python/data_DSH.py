@@ -26,8 +26,8 @@ if __name__ == "__main__":
     vectors = read_fvecs(file_path)[:100000]
     print("Shape of vectors:", vectors.shape)
     indices = np.random.permutation(vectors.shape[0])
-    data_query = vectors[indices[:query_num]]  # 选取前1000个
-    data_base = vectors[indices[query_num:]]  # 选取剩下的9000个
+    data_query = vectors[indices[:query_num]]
+    data_base = vectors[indices[query_num:]]
     gt = compute_gt(data_query, data_base)
     # print(gt)
     np.save("../datasets/{}/{}_query_DSH".format(dataset_name, dataset_name), data_query)
