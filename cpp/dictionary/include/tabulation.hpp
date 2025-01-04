@@ -20,15 +20,17 @@ struct UnivMultShift : public Hash
     uint32_t m_mask;
 };
 
-struct PolynomialHash : public Hash
+struct PolynomialMersenneHash : public Hash
 {
-    PolynomialHash(size_t k, uint32_t p, size_t l_out);
-    ~PolynomialHash();
+    PolynomialMersenneHash(size_t k, uint32_t b, size_t l_out);
+    ~PolynomialMersenneHash();
 
     uint32_t hash(uint32_t x);
 
     const size_t m_k;
-    const uint32_t m_p;
+    // Mersenne prime p = 2^b - 1
+    const uint32_t m_b;
+    const uint64_t m_p;
     const size_t m_l_out;
     uint32_t *m_a;
 };

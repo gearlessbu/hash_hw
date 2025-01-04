@@ -17,12 +17,6 @@ uint32_t generateRandom(uint64_t range_size)
 UnivMultShift::UnivMultShift(size_t l, size_t l_out) : m_l(l), m_l_out(l_out)
 {
     m_a = generateRandom(4294967296) | 1;
-    // printf("ma={%u}\n", m_a);
-    // std::mt19937_64 rng(time(0));
-    // std::uniform_int_distribution<uint32_t> dist(0, UINT32_MAX - 1);
-    // m_a = dist(rng) | 1;
-    // m_mask = (1 << (m_l - m_l_out)) - 1;
-    m_mask = (1 << (m_l_out - 2)) - 1;
 }
 uint32_t UnivMultShift::hash(uint32_t x)
 {
@@ -31,18 +25,30 @@ uint32_t UnivMultShift::hash(uint32_t x)
     return (m_a * x) >> (m_l - m_l_out);
 }
 
-PolynomialHash::PolynomialHash(size_t k, uint32_t p, size_t l_out) : m_k(k), m_p(p), m_l_out(l_out)
+PolynomialMersenneHash::PolynomialMersenneHash(size_t k, uint32_t b, size_t l_out)
+    : m_k(k), m_b(b), m_l_out(l_out), m_p((1ULL << b) - 1ULL)
 {
-    m_a = new uint32_t[k - 1];
-    for (size_t i = 0; i < k - 1; ++i)
+    m_a = new uint32_t[k];
+    for (size_t i = 0; i < k; ++i)
     {
-        m_a[i] = generateRandom(p);
+        m_a[i] = generateRandom(UINT32_MAX);
     }
 }
 
-uint32_t PolynomialHash::hash(uint32_t x) { return 0; }
+uint32_t PolynomialMersenneHash::hash(uint32_t x)
+{
+    // https://thomasahle.com/papers/mersenne.pdf Alg 1.
+    __uint128_t y = m_a[m_k - 1];
+    for (int i = m_k - 2; i >= 0; --i)
+    {
+        y = y * x + m_a[i];
+        y = (y & m_p) + (y >> m_b);
+    }
+    y = (y & m_p) + (y >> m_b);
+    return y & ((1ULL << m_l_out) - 1);
+}
 
-PolynomialHash::~PolynomialHash() { delete[] m_a; }
+PolynomialMersenneHash::~PolynomialMersenneHash() { delete[] m_a; }
 
 SimpleTabulation::SimpleTabulation(size_t num_tables, size_t domain_size, uint64_t range_size)
     : m_num_tables(num_tables), m_domain_size(domain_size), m_range_size(range_size)

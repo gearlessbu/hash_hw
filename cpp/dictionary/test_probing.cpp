@@ -78,11 +78,30 @@ void test_UnivMultShift_probing_100(std::shared_ptr<std::vector<uint32_t>> struc
     SaveVectortxt(mean_probing_cnts, "tmp/UnivMultShift_mean_probing_cnts.txt");
 }
 
+void test_Indpd5MersennePrime_probing_100(std::shared_ptr<std::vector<uint32_t>> structured_keys)
+{
+    size_t keys_num = structured_keys->size();
+    std::vector<float> mean_probing_cnts;
+    for (size_t i = 0; i < 100; ++i)
+    {
+        std::shared_ptr<Hash> Indpd5MersennePrime_ptr =
+            std::make_shared<PolynomialMersenneHash>(5, 61, 32);
+        HashTable Indpd5MersennePrime_table(1 << 21, Indpd5MersennePrime_ptr);
+        float Indpd5MersennePrime_probing_cnt_mean =
+            mean_probing_cnt(Indpd5MersennePrime_table, structured_keys);
+        // std::cout << "Indpd5MersennePrime_probing_cnt_mean=" <<
+        // Indpd5MersennePrime_probing_cnt_mean
+        //           << std::endl;
+        mean_probing_cnts.push_back(Indpd5MersennePrime_probing_cnt_mean);
+    }
+    SaveVectortxt(mean_probing_cnts, "tmp/Indpd5MersennePrime_mean_probing_cnts.txt");
+}
+
 int main()
 {
     auto structured_keys = hypercube_data(20);
-    // test_probing(structured_keys);
     // test_SimpleTabulation_probing_100(structured_keys);
-    test_UnivMultShift_probing_100(structured_keys);
+    // test_UnivMultShift_probing_100(structured_keys);
+    test_Indpd5MersennePrime_probing_100(structured_keys);
     return 0;
 }
