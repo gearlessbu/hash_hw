@@ -66,11 +66,11 @@ plt.savefig("./tmp/hypercube_cumfrac_nano.png", dpi=300, bbox_inches="tight")
 
 
 data = [
-    ['UnivMultShift'],
-    ['Indpd2MultShift'],
-    ['Indpd5MersennePrime'],
-    ['SimpleTabulation'],
-    ['Indpd5TZTable'],
+    ['univ-mult-shift'],
+    ['2-indep-mult-shift'],
+    ['simple-table'],
+    ['5-indep-TZ-table'],
+    ['5-indep-Mersenne-prime'],
 ]
 meantimes = np.loadtxt("./tmp/mean_hash_time.txt")
 for i in range(5):
