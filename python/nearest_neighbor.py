@@ -44,6 +44,6 @@ def compare_KDTree_and_LSH(sample_num=1):
 
     print("LSH mean time: {} seconds".format(LSH_time / sample_num))
     print("KDTree mean time: {} seconds".format(KDTree_time / sample_num))
-    print("LSH mean approx rate time: {} seconds".format(KDTree_time / sample_num))
+    print("LSH mean approx rate time: {} seconds".format(c / sample_num))
 
 compare_KDTree_and_LSH(20)
