@@ -205,6 +205,9 @@ int main()
     // mean_probing_100("Indpd5TZTable", structured_keys);
 
     distribution_probing_100("UnivMultShift", structured_keys);
+    distribution_probing_100("Indpd2MultShift", structured_keys);
+    distribution_probing_100("Indpd5MersennePrime", structured_keys);
     distribution_probing_100("SimpleTabulation", structured_keys);
+    distribution_probing_100("Indpd5TZTable", structured_keys);
     return 0;
 }

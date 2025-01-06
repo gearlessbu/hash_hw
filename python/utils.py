@@ -1,4 +1,18 @@
 import numpy as np
+import pathlib
+import shutil
+
+def create_folder(folder_name, exist_ok):
+    pathlib.Path(folder_name).mkdir(parents=True, exist_ok=exist_ok)
+
+def delete_folder(folder_name):
+    shutil.rmtree(folder_name)
+
+def delete_file(file_name):
+    pathlib.Path(file_name).unlink()
+
+def file_exist(file_name):
+    return pathlib.Path(file_name).is_file()
 
 def read_fvecs(file_path):
     """
