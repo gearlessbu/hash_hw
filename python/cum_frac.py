@@ -1,11 +1,18 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-UnivMultShift_mean_probing_cnts = np.loadtxt("./tmp/UnivMultShift_mean_probing_cnts.txt")
-Indpd2MultShift_mean_probing_cnts = np.loadtxt("./tmp/Indpd2MultShift_mean_probing_cnts.txt")
-Indpd5MersennePrime_mean_probing_cnts = np.loadtxt("./tmp/Indpd5MersennePrime_mean_probing_cnts.txt")
-SimpleTabulation_mean_probing_cnts = np.loadtxt("./tmp/SimpleTabulation_mean_probing_cnts.txt")
-Indpd5TZTable_mean_probing_cnts = np.loadtxt("./tmp/Indpd5TZTable_mean_probing_cnts.txt")
+# dataname = "hypercube"
+dataname = "denseinterval"
+
+fullnames = {"hypercube" : "hyper cube", "denseinterval" : "dense interval"}
+
+dataprefix = "" if dataname is None else dataname + "_"
+
+UnivMultShift_mean_probing_cnts = np.loadtxt("./tmp/{}UnivMultShift_mean_probing_cnts.txt".format(dataprefix))
+Indpd2MultShift_mean_probing_cnts = np.loadtxt("./tmp/{}Indpd2MultShift_mean_probing_cnts.txt".format(dataprefix))
+Indpd5MersennePrime_mean_probing_cnts = np.loadtxt("./tmp/{}Indpd5MersennePrime_mean_probing_cnts.txt".format(dataprefix))
+SimpleTabulation_mean_probing_cnts = np.loadtxt("./tmp/{}SimpleTabulation_mean_probing_cnts.txt".format(dataprefix))
+Indpd5TZTable_mean_probing_cnts = np.loadtxt("./tmp/{}Indpd5TZTable_mean_probing_cnts.txt".format(dataprefix))
 
 sorted_UnivMultShift = np.sort(UnivMultShift_mean_probing_cnts)
 sorted_Indpd2MultShift = np.sort(Indpd2MultShift_mean_probing_cnts)
@@ -27,17 +34,17 @@ ax.set_xlim(0, 10)
 ax.set_ylim(0, 1)
 plt.xlabel("average probes per insert/delete")
 plt.ylabel("cumulative fraction")
-plt.title("Keys from hyper cube")
+plt.title("Keys from {}".format(fullnames[dataname]))
 plt.legend()
-plt.savefig("./tmp/hypercube_cumfrac_probes.png", dpi=300, bbox_inches="tight")
+plt.savefig("./tmp/{}cumfrac_probes.png".format(dataprefix), dpi=300, bbox_inches="tight")
 # plt.show()
 
 
-UnivMultShift_mean_insert_nanosec = np.loadtxt("./tmp/UnivMultShift_mean_insert_nanosec.txt")
-Indpd2MultShift_mean_insert_nanosec = np.loadtxt("./tmp/Indpd2MultShift_mean_insert_nanosec.txt")
-Indpd5MersennePrime_mean_insert_nanosec = np.loadtxt("./tmp/Indpd5MersennePrime_mean_insert_nanosec.txt")
-SimpleTabulation_mean_insert_nanosec = np.loadtxt("./tmp/SimpleTabulation_mean_insert_nanosec.txt")
-Indpd5TZTable_mean_insert_nanosec = np.loadtxt("./tmp/Indpd5TZTable_mean_insert_nanosec.txt")
+UnivMultShift_mean_insert_nanosec = np.loadtxt("./tmp/{}UnivMultShift_mean_insert_nanosec.txt".format(dataprefix))
+Indpd2MultShift_mean_insert_nanosec = np.loadtxt("./tmp/{}Indpd2MultShift_mean_insert_nanosec.txt".format(dataprefix))
+Indpd5MersennePrime_mean_insert_nanosec = np.loadtxt("./tmp/{}Indpd5MersennePrime_mean_insert_nanosec.txt".format(dataprefix))
+SimpleTabulation_mean_insert_nanosec = np.loadtxt("./tmp/{}SimpleTabulation_mean_insert_nanosec.txt".format(dataprefix))
+Indpd5TZTable_mean_insert_nanosec = np.loadtxt("./tmp/{}Indpd5TZTable_mean_insert_nanosec.txt".format(dataprefix))
 
 sorted_nano_UnivMultShift = np.sort(UnivMultShift_mean_insert_nanosec)
 sorted_nano_Indpd2MultShift = np.sort(Indpd2MultShift_mean_insert_nanosec)
@@ -59,9 +66,9 @@ ax.set_xlim(0, 150)
 ax.set_ylim(0, 1)
 plt.xlabel("average time per insert+delete cycle (nanoseconds)")
 plt.ylabel("cumulative fraction")
-plt.title("Keys from hyper cube")
+plt.title("Keys from {}".format(fullnames[dataname]))
 plt.legend()
-plt.savefig("./tmp/hypercube_cumfrac_nano.png", dpi=300, bbox_inches="tight")
+plt.savefig("./tmp/{}cumfrac_nano.png".format(dataprefix), dpi=300, bbox_inches="tight")
 # plt.show()
 
 
