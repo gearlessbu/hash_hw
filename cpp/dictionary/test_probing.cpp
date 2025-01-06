@@ -222,21 +222,27 @@ void distribution_probing_100(const std::string& hash_type,
 
 int main()
 {
-    // auto structured_keys = hypercube_data(20);
+    auto structured_keys = hypercube_data(20);
 
-    // std::vector<float> mean_hash_times;
-    // mean_hash_times.push_back(mean_hash_time("UnivMultShift", structured_keys));
-    // mean_hash_times.push_back(mean_hash_time("Indpd2MultShift", structured_keys));
-    // mean_hash_times.push_back(mean_hash_time("Indpd5MersennePrime", structured_keys));
-    // mean_hash_times.push_back(mean_hash_time("SimpleTabulation", structured_keys));
-    // mean_hash_times.push_back(mean_hash_time("Indpd5TZTable", structured_keys));
-    // SaveVectortxt(mean_hash_times, "tmp/mean_hash_time.txt");
+    std::vector<float> mean_hash_times;
+    mean_hash_times.push_back(mean_hash_time("UnivMultShift", structured_keys));
+    mean_hash_times.push_back(mean_hash_time("Indpd2MultShift", structured_keys));
+    mean_hash_times.push_back(mean_hash_time("Indpd5MersennePrime", structured_keys));
+    mean_hash_times.push_back(mean_hash_time("SimpleTabulation", structured_keys));
+    mean_hash_times.push_back(mean_hash_time("Indpd5TZTable", structured_keys));
+    SaveVectortxt(mean_hash_times, "tmp/mean_hash_time.txt");
 
-    // mean_probing_100("UnivMultShift", structured_keys);
-    // mean_probing_100("Indpd2MultShift", structured_keys);
-    // mean_probing_100("Indpd5MersennePrime", structured_keys);
-    // mean_probing_100("SimpleTabulation", structured_keys);
-    // mean_probing_100("Indpd5TZTable", structured_keys);
+    mean_probing_100("UnivMultShift", structured_keys);
+    mean_probing_100("Indpd2MultShift", structured_keys);
+    mean_probing_100("Indpd5MersennePrime", structured_keys);
+    mean_probing_100("SimpleTabulation", structured_keys);
+    mean_probing_100("Indpd5TZTable", structured_keys);
+
+    mean_probing_100("UnivMultShift", structured_keys, "hypercube", false);
+    mean_probing_100("Indpd2MultShift", structured_keys, "hypercube", false);
+    mean_probing_100("Indpd5MersennePrime", structured_keys, "hypercube", false);
+    mean_probing_100("SimpleTabulation", structured_keys, "hypercube", false);
+    mean_probing_100("Indpd5TZTable", structured_keys, "hypercube", false);
 
     // mean_probing_100("UnivMultShift", structured_keys, "hypercube", true);
     // mean_probing_100("Indpd2MultShift", structured_keys, "hypercube", true);
@@ -250,17 +256,17 @@ int main()
     // distribution_probing_100("SimpleTabulation", structured_keys, "hypercube", true);
     // distribution_probing_100("Indpd5TZTable", structured_keys, "hypercube", true);
 
-    auto structured_keys = dense_interval();
-    mean_probing_100("UnivMultShift", structured_keys, "denseinterval", false);
-    mean_probing_100("Indpd2MultShift", structured_keys, "denseinterval", false);
-    mean_probing_100("Indpd5MersennePrime", structured_keys, "denseinterval", false);
-    mean_probing_100("SimpleTabulation", structured_keys, "denseinterval", false);
-    mean_probing_100("Indpd5TZTable", structured_keys, "denseinterval", false);
+    auto structured_keys2 = dense_interval();
+    mean_probing_100("UnivMultShift", structured_keys2, "denseinterval", false);
+    mean_probing_100("Indpd2MultShift", structured_keys2, "denseinterval", false);
+    mean_probing_100("Indpd5MersennePrime", structured_keys2, "denseinterval", false);
+    mean_probing_100("SimpleTabulation", structured_keys2, "denseinterval", false);
+    mean_probing_100("Indpd5TZTable", structured_keys2, "denseinterval", false);
 
-    distribution_probing_100("UnivMultShift", structured_keys, "denseinterval", false);
-    distribution_probing_100("Indpd2MultShift", structured_keys, "denseinterval", false);
-    distribution_probing_100("Indpd5MersennePrime", structured_keys, "denseinterval", false);
-    distribution_probing_100("SimpleTabulation", structured_keys, "denseinterval", false);
-    distribution_probing_100("Indpd5TZTable", structured_keys, "denseinterval", false);
+    distribution_probing_100("UnivMultShift", structured_keys2, "denseinterval", false);
+    distribution_probing_100("Indpd2MultShift", structured_keys2, "denseinterval", false);
+    distribution_probing_100("Indpd5MersennePrime", structured_keys2, "denseinterval", false);
+    distribution_probing_100("SimpleTabulation", structured_keys2, "denseinterval", false);
+    distribution_probing_100("Indpd5TZTable", structured_keys2, "denseinterval", false);
     return 0;
 }

@@ -9,6 +9,7 @@ conda activate hash
 ```sh
 ./build/Hash/dictionary/test_probing
 python python/cum_frac.py
+python python/histmap.py
 ```
 ### Closest pair experiment
 Download SIFT1M from http://corpus-texmex.irisa.fr. and unzip it in `datasets/`.
