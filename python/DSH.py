@@ -1,8 +1,9 @@
 import numpy as np
 import warnings
+import matplotlib.pyplot as plt
 from utils import read_fvecs
 import time
-from metrics import compute_map
+from metrics import compute_map, precision_and_recall_curve
 from sklearn.cluster import KMeans
 import scipy.io
 
@@ -190,17 +191,54 @@ class DSH:
         H = self.hash_method(query)
         distances = np.sum(H != self.database, axis=1)
         return distances
+    
+dataset_name = "sift"
+data_query = np.load("./datasets/{}/{}_query_DSH.npy".format(dataset_name, dataset_name))
+data_base = np.load("./datasets/{}/{}_base_DSH.npy".format(dataset_name, dataset_name))
+gt = np.load("./datasets/{}/{}_gt_DSH.npy".format(dataset_name, dataset_name))
+
+def test_coeff(alpha=1.5, p=3, r=3, L=64):
+    dsh = DSH(data_base, L, alpha, r, p)
+    return compute_map(data_query, gt, dsh)
 
 if __name__ == "__main__":
-    dataset_name = "sift"
-    data_query = np.load("../datasets/{}/{}_query_DSH.npy".format(dataset_name, dataset_name))
-    data_base = np.load("../datasets/{}/{}_base_DSH.npy".format(dataset_name, dataset_name))
-    gt = np.load("../datasets/{}/{}_gt_DSH.npy".format(dataset_name, dataset_name))
-    # dsh = DSH(data_base, 64, 0.5, 5, 3)
-    dsh = DSH(data_base, 96, p=3)
-    map = compute_map(data_query, gt, dsh)
-    print(map)
 
-    # file_path = "../datasets/{}/{}_base.fvecs".format("sift", "sift")
-    # vectors = read_fvecs(file_path)
-    # dsh = DSH(vectors, 64)
+    map_p = [] # p = 1, 2, 3, 4, 5, 6
+    ps = [1, 2, 3, 4, 5, 6]
+    for p in ps:
+        map_p.append(test_coeff(p=p))
+    np.savetxt("tmp/DSH_map_p.txt", np.array(map_p))
+
+    map_alpha = []
+    alphas = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
+    for alpha in alphas:
+        map_alpha.append(test_coeff(alpha=alpha))
+    np.savetxt("tmp/DSH_map_alpha.txt", np.array(map_alpha))
+
+    map_r = []
+    rs = [1, 3, 5, 7, 9, 11]
+    for r in rs:
+        map_r.append(test_coeff(r=r))
+    np.savetxt("tmp/DSH_map_r.txt", np.array(map_r))
+
+    map_L = []
+    Ls = [16, 32, 48, 64, 80, 96]
+    for L in Ls:
+        map_L.append(test_coeff(L=L))
+    np.savetxt("tmp/DSH_map_L.txt", np.array(map_L))
+
+    dsh = DSH(data_base, 64)
+    precisions, recall = precision_and_recall_curve(data_query, gt, dsh)
+    plt.plot(recall, precisions, marker='o')
+    plt.xlabel("recall")
+    plt.ylabel("precision")
+    plt.show()
+    np.savetxt("tmp/MAPandPR/DSH_PR_64.txt", np.stack((precisions, recall)))
+
+    dsh = DSH(data_base, 96)
+    precisions, recall = precision_and_recall_curve(data_query, gt, dsh)
+    plt.plot(recall, precisions, marker='o')
+    plt.xlabel("recall")
+    plt.ylabel("precision")
+    plt.show()
+    np.savetxt("tmp/MAPandPR/DSH_PR_96.txt", np.stack((precisions, recall)))

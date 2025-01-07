@@ -16,3 +16,10 @@ Download SIFT1M from http://corpus-texmex.irisa.fr. and unzip it in `datasets/`.
 ```sh
 python python/nearest_neighbor.py
 ```
+
+## Compare LSH and DSH
+```sh
+python python/LSH.py
+python python/DSH.py
+python python/MAP_curve.py
+```

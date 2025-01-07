@@ -1,7 +1,8 @@
 import numpy as np
+import matplotlib.pyplot as plt
 import warnings
 import time
-from metrics import compute_map
+from metrics import compute_map, precision_and_recall_curve
 
 np.random.seed(42)
 
@@ -28,15 +29,37 @@ class LSH:
         distances = np.sum(H != self.database, axis=1)
         return distances
 
+dataset_name = "sift"
+data_query = np.load("./datasets/{}/{}_query_DSH.npy".format(dataset_name, dataset_name))
+data_base = np.load("./datasets/{}/{}_base_DSH.npy".format(dataset_name, dataset_name))
+gt = np.load("./datasets/{}/{}_gt_DSH.npy".format(dataset_name, dataset_name))
+
+def test_coeff(L=64):
+    lsh = LSH(data_base, L)
+    return compute_map(data_query, gt, lsh)
+
 if __name__ == "__main__":
-    dataset_name = "sift"
-    data_query = np.load("../datasets/{}/{}_query_DSH.npy".format(dataset_name, dataset_name))
-    data_base = np.load("../datasets/{}/{}_base_DSH.npy".format(dataset_name, dataset_name))
-    gt = np.load("../datasets/{}/{}_gt_DSH.npy".format(dataset_name, dataset_name))
-    # dsh = DSH(data_base, 64, 0.5, 5, 3)
-    dsh = LSH(data_base, 96)
-    map = compute_map(data_query, gt, dsh)
-    print(map)
+    map_L = []
+    Ls = [16, 32, 48, 64, 80, 96]
+    for L in Ls:
+        map_L.append(test_coeff(L=L))
+    np.savetxt("tmp/LSH_map_L.txt", np.array(map_L))
+
+    lsh = LSH(data_base, 64)
+    precisions, recall = precision_and_recall_curve(data_query, gt, lsh)
+    plt.plot(recall, precisions, marker='o')
+    plt.xlabel("recall")
+    plt.ylabel("precision")
+    plt.show()
+    np.savetxt("tmp/MAPandPR/LSH_PR_64.txt", np.stack((precisions, recall)))
+
+    lsh = LSH(data_base, 96)
+    precisions, recall = precision_and_recall_curve(data_query, gt, lsh)
+    plt.plot(recall, precisions, marker='o')
+    plt.xlabel("recall")
+    plt.ylabel("precision")
+    plt.show()
+    np.savetxt("tmp/MAPandPR/LSH_PR_96.txt", np.stack((precisions, recall)))
 
     # file_path = "../datasets/{}/{}_base.fvecs".format("sift", "sift")
     # vectors = read_fvecs(file_path)
